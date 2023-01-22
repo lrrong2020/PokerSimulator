@@ -1,10 +1,12 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.stream.Collectors;
 
 class CompareHands
 {	
 	public static final String[] STRAIGHTS = {"AKQJT","KQJT9","QJT98","JT987","T9876","98765","87654","76543","65432","5432A"};
+	public static final String[] FLUSHES = {"sssss","ccccc","ddddd","hhhhh"};
 
 	public static int compare(Hand hand1, Hand hand2, Board board)
 	{	
@@ -213,6 +215,45 @@ class CompareHands
 	}
 
 	static int[] testFlush(Hand hand, Board board) {
+		int[] params = new int[1];
+		ArrayList<Card> newList = new ArrayList<Card>(7);
+		newList.addAll(hand.getCards());
+		newList.addAll(board.getCards());
+
+		//sort new List
+		Card.sortCards(newList);
+
+		//suit string
+		String suits = newList.stream().map(x -> x.getSuit().toString()).collect(Collectors.joining(""));
+
+		//sort Array
+		char temp[] = suits.toCharArray();
+		Arrays.sort(temp);
+		suits = new String(temp);
+
+		System.out.println("suits:" + suits);
+
+		//check 5 cards in same suit
+		for(int i = 0; i < FLUSHES.length; i++) 
+		{
+			if (suits.contains(FLUSHES[i])) 
+			{	
+				String flushSuit = FLUSHES[i].substring(0, 1);
+				System.out.println("found: " + FLUSHES[i]);
+
+				for(int j = 0; j < newList.size(); j++) 
+				{	
+					Card currentCard = newList.get(j);
+					if(currentCard.getSuit().equals(flushSuit)) 
+					{
+						params[0] = Card.CARD_ORDER_ASC.indexOf(currentCard.getNumber());//x-high straight
+						return params;
+					}
+					else continue;
+				}
+			}
+			else continue;
+		}
 
 		return null;
 	}
@@ -232,7 +273,7 @@ class CompareHands
 		//remove duplicate
 		String numbersNoDuplicate = "";
 		LinkedHashSet<Character> lhs = new LinkedHashSet<>();
-		for(int i=0;i<numbers.length();i++) lhs.add(numbers.charAt(i));
+		for(int i = 0; i < numbers.length(); i++) lhs.add(numbers.charAt(i));
 		for(Character ch : lhs) numbersNoDuplicate += ch;
 
 		System.out.println("numbersNoDuplicate: " + numbersNoDuplicate); 
@@ -245,11 +286,12 @@ class CompareHands
 
 		//exist one of straight types
 		for(int i = 0; i < STRAIGHTS.length; i++) 
-		{
-			if (numbersNoDuplicate.contains(STRAIGHTS[i])) 
+		{	
+			String straightNumber = STRAIGHTS[i];
+			if (numbersNoDuplicate.contains(straightNumber)) 
 			{
-				System.out.println("found: " + STRAIGHTS[i]);
-				params[0] = Card.CARD_ORDER_ASC.indexOf(STRAIGHTS[i].substring(0, 1));//x-high straight
+				System.out.println("found: " + straightNumber);
+				params[0] = Card.CARD_ORDER_ASC.indexOf(straightNumber.substring(0, 1));//x-high straight
 				return params;
 			}
 			else continue;

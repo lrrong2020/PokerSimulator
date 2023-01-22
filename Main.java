@@ -12,13 +12,13 @@ public class Main
 //				deck.deal(hand1, hand2, board);
 
 		//test high card
-		Hand hand1 = new Hand("5d","6h");
-		Hand hand2 = new Hand("As","3c");
+		Hand hand1 = new Hand("Ks","8s");
+		Hand hand2 = new Hand("As","6s");
 
-		Board board = new Board("2s","3s","4d","5h","8h");
+		Board board = new Board("2s","3s","4s","5h","8h");
 
-		int[] testStraight = CompareHands.testStraight(hand1, board);
-		System.out.println(testStraight[0]);
+		int[] testFlush = CompareHands.testStraight(hand2, board);
+		System.out.println(testFlush[0]);
 		
 //		CompareHands.compareSameLevel(hand1, hand2, board, 0, null, null);
 	}
