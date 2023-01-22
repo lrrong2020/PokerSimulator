@@ -15,7 +15,7 @@ class Card implements Comparable
 	}
 
 	public static final String CARD_ORDER_ASC = "23456789TJQKA";
-
+	public static final String CARD_ORDER_DESC = "AKQJT98765432";
 
 	public static final String[] ALL_CARDS = 
 		{
