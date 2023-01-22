@@ -40,6 +40,7 @@ class Card implements Comparable
 
 	String getNumber() 
 	{
+//		System.out.println("getNumber(): " + this.number);
 		return this.number;
 	}
 

@@ -12,12 +12,15 @@ public class Main
 //				deck.deal(hand1, hand2, board);
 
 		//test high card
-		Hand hand1 = new Hand("Td","4h");
-		Hand hand2 = new Hand("Ts","2c");
+		Hand hand1 = new Hand("5d","6h");
+		Hand hand2 = new Hand("As","3c");
 
-		Board board = new Board("Qs","Qc","Qd","Qh","8h");
+		Board board = new Board("2s","3s","4d","5h","8h");
 
-		CompareHands.compareSameLevel(hand1, hand2, board, 0);
+		int[] testStraight = CompareHands.testStraight(hand1, board);
+		System.out.println(testStraight[0]);
+		
+//		CompareHands.compareSameLevel(hand1, hand2, board, 0, null, null);
 	}
 }
 

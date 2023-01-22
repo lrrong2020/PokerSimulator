@@ -1,9 +1,15 @@
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.stream.Collectors;
+
 class CompareHands
-{
+{	
+	public static final String[] STRAIGHTS = {"AKQJT","KQJT9","QJT98","JT987","T9876","98765","87654","76543","65432","5432A"};
+
 	public static int compare(Hand hand1, Hand hand2, Board board)
 	{	
-		int level1 = getLevel(hand1, board);
-		int level2 = getLevel(hand2, board);
+		int level1 = compareLevel(hand1, board)[0];
+		int level2 = compareLevel(hand2, board)[0];
 
 		if(level1 > level2) 
 		{
@@ -15,13 +21,11 @@ class CompareHands
 		}
 		else 
 		{
-			return compareSameLevel(hand1, hand2, board, level1);
+			return compareSameLevel(hand1, hand2, board, level1, compareLevel(hand1, board), compareLevel(hand2, board));
 		}
-
 	}
 
-
-	static int compareSameLevel(Hand hand1, Hand hand2, Board board, int level) 
+	static int compareSameLevel(Hand hand1, Hand hand2, Board board, int level, int[] params1, int[] params2) 
 	{
 		if(level == 0) //high card
 		{	
@@ -61,7 +65,7 @@ class CompareHands
 				//1 + 4 - chop
 
 				System.out.println("1 + 4 - chop");
-				
+
 				return 0;
 
 			}
@@ -71,7 +75,7 @@ class CompareHands
 				//2 + 3 - chop
 
 				System.out.println("2 + 3 - chop");
-				
+
 				return 0;
 			}
 			else 
@@ -79,7 +83,7 @@ class CompareHands
 				//compare high card
 
 				System.out.println("compare high card");
-				
+
 				return hand1Higher.compareTo(hand2Higher);
 			}
 		}
@@ -118,72 +122,150 @@ class CompareHands
 
 	}
 
-	static int getLevel(Hand hand, Board board) 
+	static int[] compareLevel(Hand hand, Board board) 
 	{
-		if(hasStraightFlush(hand, board)) 
-		{
-			return 8;
+		int[] params = null;
+
+		int[] resStraightFlush = testStraightFlush(hand, board);
+		int[] resQuads = testQuads(hand, board);
+		int[] resFullHouse = testFullHouse(hand, board);
+		int[] resFlush = testFlush(hand, board);
+		int[] resStraight = testStraight(hand, board);
+		int[] resSet = testSet(hand, board);
+		int[] resTwoPair = testTwoPair(hand, board);
+		int[] resPair = testPair(hand, board);
+
+		if(resStraightFlush != null) 
+		{	
+			params = new int[2];
+			params[0] = 8;
 		}
-		else if(hasQuads(hand, board)) 
+		else if(resQuads != null) 
 		{
-			return 7;
+			params = new int[2];
+			params[0] = 7;
 		}
-		else if(hasFullHouse(hand, board)) 
+		else if(resFullHouse != null) 
 		{
-			return 6;
+			params = new int[2];
+			params[0] = 6;
 		}
-		else if(hasFlush(hand, board)) 
+		else if(resFlush != null) 
 		{
-			return 5;
+			params = new int[2];
+			params[0] = 5;
 		}
-		else if(hasStraight(hand, board)) 
+		else if(resStraight != null) 
 		{
-			return 4;
+			params = new int[2];
+			params[0] = 4;
 		}
-		else if(hasSet(hand, board)) 
+		else if(resSet != null) 
 		{
-			return 3;
+			params = new int[2];
+			params[0] = 3;
 		}
-		else if(hasTwoPair(hand, board)) 
+		else if(resTwoPair != null) 
 		{
-			return 2;
+			params = new int[2];
+			params[0] = 2;
 		}
-		else if(hasPair(hand, board)) 
+		else if(resPair != null) 
 		{
-			return 1;
+			params = new int[2];
+			params[0] = 1;
 		}
-		else return 0;
+		else 
+		{
+			params = new int[1];
+			params[0] = 0;
+		}
+
+		return params;
 	}
 
-	static boolean hasStraightFlush(Hand hand, Board board) {
-		return false;
+	static int[] testStraightFlush(Hand hand, Board board) {
+		int[] resStraight = testStraight(hand, board);
+		int[] resFlush = testFlush(hand, board);
+
+		if ((resStraight == null) && (resFlush == null)) 
+		{
+			return null;
+		}
+		else if(resStraight != null)
+		{
+			//only straight
+			return resStraight;
+		}
+		else
+		{
+			//only flush
+			return resFlush;
+		}
 	}
 
-	static boolean hasQuads(Hand hand, Board board) {
-		return false;
+	static int[] testQuads(Hand hand, Board board) {
+		return null;
 	}
 
-	static boolean hasFullHouse(Hand hand, Board board) {
-		return false;
+	static int[] testFullHouse(Hand hand, Board board) {
+		return null;
 	}
 
-	static boolean hasFlush(Hand hand, Board board) {
-		return false;
+	static int[] testFlush(Hand hand, Board board) {
+
+		return null;
 	}
 
-	static boolean hasStraight(Hand hand, Board board) {
-		return false;
+	static int[] testStraight(Hand hand, Board board) {
+		int[] params = new int[1];
+		ArrayList<Card> newList = new ArrayList<Card>(7);
+		newList.addAll(hand.getCards());
+		newList.addAll(board.getCards());
+
+		//sort new List
+		Card.sortCards(newList);
+
+		//number string
+		String numbers = newList.stream().map(x -> x.getNumber().toString()).collect(Collectors.joining(""));
+
+		//remove duplicate
+		String numbersNoDuplicate = "";
+		LinkedHashSet<Character> lhs = new LinkedHashSet<>();
+		for(int i=0;i<numbers.length();i++) lhs.add(numbers.charAt(i));
+		for(Character ch : lhs) numbersNoDuplicate += ch;
+
+		System.out.println("numbersNoDuplicate: " + numbersNoDuplicate); 
+
+		//if A exists, add to the end
+		if(numbersNoDuplicate.substring(0, 1).equals("A")) 
+		{
+			numbersNoDuplicate += "A";
+		}
+
+		//exist one of straight types
+		for(int i = 0; i < STRAIGHTS.length; i++) 
+		{
+			if (numbersNoDuplicate.contains(STRAIGHTS[i])) 
+			{
+				System.out.println("found: " + STRAIGHTS[i]);
+				params[0] = Card.CARD_ORDER_ASC.indexOf(STRAIGHTS[i].substring(0, 1));//x-high straight
+				return params;
+			}
+			else continue;
+		}
+		return null;
 	}
 
-	static boolean hasSet(Hand hand, Board board) {
-		return false;
+	static int[] testSet(Hand hand, Board board) {
+		return null;
 	}
 
-	static boolean hasTwoPair(Hand hand, Board board) {
-		return false;
+	static int[] testTwoPair(Hand hand, Board board) {
+		return null;
 	}
 
-	static boolean hasPair(Hand hand, Board board) {
-		return false;
+	static int[] testPair(Hand hand, Board board) {
+		return null;
 	}
 }
