@@ -7,7 +7,10 @@ class CompareHands
 {	
 	public static final String[] STRAIGHTS = {"AKQJT","KQJT9","QJT98","JT987","T9876","98765","87654","76543","65432","5432A"};
 	public static final String[] FLUSHES = {"sssss","ccccc","ddddd","hhhhh"};
-
+	public static final String[] QUADS = {"AAAA","KKKK","QQQQ","JJJJ","TTTT","9999","8888","7777","6666","5555","4444","3333","2222"};
+	
+	public static final String[] PAIR = {"AA", "KK", "QQ", "JJ", "TT", "99", "88", "77", "66", "55", "44", "33", "22"};
+	
 	public static int compare(Hand hand1, Hand hand2, Board board)
 	{	
 		int level1 = compareLevel(hand1, board)[0];
@@ -137,17 +140,19 @@ class CompareHands
 		int[] resTwoPair = testTwoPair(hand, board);
 		int[] resPair = testPair(hand, board);
 
+		boolean hasPublicPair = hasPair(board.getCards());
+
 		if(resStraightFlush != null) 
 		{	
 			params = new int[2];
 			params[0] = 8;
 		}
-		else if(resQuads != null) 
+		else if(hasPublicPair && resQuads != null) 
 		{
 			params = new int[2];
 			params[0] = 7;
 		}
-		else if(resFullHouse != null) 
+		else if(hasPublicPair && resFullHouse != null) 
 		{
 			params = new int[2];
 			params[0] = 6;
@@ -207,6 +212,30 @@ class CompareHands
 	}
 
 	static int[] testQuads(Hand hand, Board board) {
+		int[] params = new int[1];
+		ArrayList<Card> newList = new ArrayList<Card>(7);
+		newList.addAll(hand.getCards());
+		newList.addAll(board.getCards());
+
+		//sort new List
+		Card.sortCards(newList);
+
+		//number string
+		String numbers = newList.stream().map(x -> x.getNumber().toString()).collect(Collectors.joining(""));
+		
+		//exist one of quads types
+		for(int i = 0; i < QUADS.length; i++) 
+		{	
+			String quadsNumber = QUADS[i];
+			if (numbers.contains(quadsNumber)) 
+			{
+				System.out.println("found: " + quadsNumber);
+				params[0] = Card.CARD_ORDER_ASC.indexOf(quadsNumber.substring(0, 1));//x-high straight
+				return params;
+			}
+			else continue;
+		}
+		
 		return null;
 	}
 
@@ -309,5 +338,21 @@ class CompareHands
 
 	static int[] testPair(Hand hand, Board board) {
 		return null;
+	}
+	
+	static boolean hasPair(ArrayList<Card> cards) 
+	{	
+		//number string
+		String numbers = cards.stream().map(x -> x.getNumber().toString()).collect(Collectors.joining(""));
+
+		for(int i = 0; i < PAIR.length; i++) 
+		{
+			if(numbers.contains(PAIR[i])) 
+			{
+				return true;
+			}
+			else continue;
+		}
+		return false;
 	}
 }

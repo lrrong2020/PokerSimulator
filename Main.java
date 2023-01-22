@@ -12,12 +12,14 @@ public class Main
 //				deck.deal(hand1, hand2, board);
 
 		//test high card
-		Hand hand1 = new Hand("Ks","8s");
-		Hand hand2 = new Hand("As","6s");
+		Hand hand1 = new Hand("Ah","8s");
+		Hand hand2 = new Hand("2h","2c");
 
-		Board board = new Board("2s","3s","4s","5h","8h");
-
-		int[] testFlush = CompareHands.testStraight(hand2, board);
+		Board board = new Board("7s","6d","Ac","Ts","2d");
+		
+		System.out.println("public pair? " + CompareHands.hasPair(board.getCards()));
+		
+		int[] testFlush = CompareHands.testQuads(hand2, board);
 		System.out.println(testFlush[0]);
 		
 //		CompareHands.compareSameLevel(hand1, hand2, board, 0, null, null);
