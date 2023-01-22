@@ -8,16 +8,21 @@ public class Main
 {
 	public static void main(String[] args) 
 	{
-		Hand hand1 = new Hand();
-		Hand hand2 = new Hand();
+//		Hand hand1 = new Hand();
+//		Hand hand2 = new Hand();
+//		
+//		Board board = new Board();
+//		
+//		Deck deck = new Deck();
+//		deck.deal(hand1, hand2, board);
 		
-		Board board = new Board();
+		Hand hand1 = new Hand("2d","3h");
+		Hand hand2 = new Hand("3s","2c");
 		
-		Deck deck = new Deck();
-		deck.deal(hand1, hand2, board);
+		Board board = new Board("As","Ac","Ad","Ah","Kh");
 		
+		HandComparator.compareSameLevel(hand1, hand2, board, 0);
 		
-
 	}
 }
 
@@ -68,21 +73,9 @@ class Card
 		return this.suit;
 	}
 	
-	class CardComparator implements Comparator<Card>
-	{
-
-		@Override
-		public int compare(Card card1, Card card2)
-		{
-			return Integer.compare(Card.CARD_ORDER.indexOf(card1.getNumber()), Card.CARD_ORDER.indexOf(card2.getNumber()));
-		}
-		
-	}
-	
-	
 	public static ArrayList<Card> sortCards(ArrayList<Card> cards)
 	{	
-		Collections.sort(cards, new Card() . new CardComparator());
+		Collections.sort(cards, new CardComparator());
 		return cards;
 	}
 	
@@ -144,6 +137,22 @@ class Board
 {
 	private ArrayList<Card> cards = new ArrayList<Card>(5);
 	
+	Board()
+	{
+		
+	}
+	
+	Board(String s1, String s2, String s3, String s4, String s5)
+	{
+		this.cards.add(new Card(s1));
+		this.cards.add(new Card(s2));
+		this.cards.add(new Card(s3));
+		this.cards.add(new Card(s4));
+		this.cards.add(new Card(s5));
+
+		this.sort();
+	}
+	
 	public ArrayList<Card> getCards() 
 	{
 		return this.cards;
@@ -163,6 +172,21 @@ class Board
 class Hand
 {
 	private ArrayList<Card> cards = new ArrayList<Card>(2);
+	
+	Hand() 
+	{
+		
+	}
+	
+	Hand(String s1, String s2)
+	{
+		this.cards.add(new Card(s1));
+		this.cards.add(new Card(s2));
+		
+		this.sort();
+	}
+	
+
 	
 //	boolean isSuited() 
 //	{
@@ -185,7 +209,17 @@ class Hand
 	}
 }
 
-class handComparator
+class CardComparator implements Comparator<Card>
+{
+	@Override
+	public int compare(Card card1, Card card2)
+	{
+		return Integer.compare(Card.CARD_ORDER.indexOf(card1.getNumber()), Card.CARD_ORDER.indexOf(card2.getNumber()));
+	}
+	
+}
+
+class HandComparator
 {
 	static int compareTo(Hand hand1, Hand hand2, Board board)
 	{	
@@ -212,6 +246,63 @@ class handComparator
 	{
 		if(level == 0) //high card
 		{	
+			//pre-condition!
+//			hand1.sort();
+//			hand2.sort();
+//			board.sort();
+			
+			Card hand1Higher = hand1.getCards().get(0);
+			Card hand1Lower = hand1.getCards().get(1);
+			
+			System.out.println("hand1Higher" + hand1Higher);
+			System.out.println("hand1Lower" + hand1Lower);
+			
+			Card hand2Higher = hand2.getCards().get(0);
+			Card hand2Lower = hand2.getCards().get(1);
+			
+			System.out.println("hand2Higher" + hand2Higher);
+			System.out.println("hand2Lower" + hand2Lower);
+			
+			Card boardLowest = board.getCards().get(4);
+			System.out.println("boardLowest" + boardLowest);
+			
+
+			if(new CardComparator().compare(hand1Higher, boardLowest) < 0
+					&& new CardComparator().compare(hand2Higher, boardLowest) < 0)
+			{
+				//highest cards are board - chop
+				
+				System.out.println("highest cards are board - chop");
+				
+				return 0;
+			}
+			else if(new CardComparator().compare(hand1Higher, hand2Higher) == 0
+					&& new CardComparator().compare(hand1Lower, boardLowest) < 0
+					&& new CardComparator().compare(hand2Lower, boardLowest) < 0)
+			{
+				//1 + 4 - chop
+				
+				System.out.println("1 + 4 - chop");
+				
+			}
+			else if(new CardComparator().compare(hand1Higher, hand2Higher) == 0
+					&& new CardComparator().compare(hand1Lower, hand2Lower) == 0)
+			{
+				//2 + 3 - chop
+				
+				System.out.println("2 + 3 - chop");
+				
+			}
+			else 
+			{
+				//compare high card
+				
+				System.out.println("compare high card");
+			}
+			
+			
+
+			
 			return 0;
 		}
 		else if(level == 1) //one pair
