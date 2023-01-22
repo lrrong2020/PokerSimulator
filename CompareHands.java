@@ -8,9 +8,39 @@ class CompareHands
 	public static final String[] STRAIGHTS = {"AKQJT","KQJT9","QJT98","JT987","T9876","98765","87654","76543","65432","5432A"};
 	public static final String[] FLUSHES = {"sssss","ccccc","ddddd","hhhhh"};
 	public static final String[] QUADS = {"AAAA","KKKK","QQQQ","JJJJ","TTTT","9999","8888","7777","6666","5555","4444","3333","2222"};
-	
+	public static final String[] FULLHOUSE = {
+			"AAAKK", "AAAQQ", "AAAJJ", "AAATT", "AAA99", "AAA88", "AAA77", "AAA66", "AAA55", "AAA44", "AAA33", "AAA22",
+			"AAKKK", "KKKQQ", "KKKJJ", "KKKTT", "KKK99", "KKK88", "KKK77", "KKK66", "KKK55", "KKK44", "KKK33", "KKK22",
+			"AAQQQ", "QQQKK", "QQQJJ", "QQQTT", "QQQ99", "QQQ88", "QQQ77", "QQQ66", "QQQ55", "QQQ44", "QQQ33", "QQQ22",
+			"AAJJJ", "KKJJJ", "QQJJJ", "JJJTT", "JJJ99", "JJJ88", "JJJ77", "JJJ66", "JJJ55", "JJJ44", "JJJ33", "JJJ22",
+			"AATTT", "KKTTT", "QQTTT", "JJTTT", "TTT99", "TTT88", "TTT77", "TTT66", "TTT55", "TTT44", "TTT33", "TTT22",
+			"AA999", "KK999", "QQ999", "JJ999", "TT999", "99988", "99977", "99966", "99955", "99944", "99933", "99922",
+			"AA888", "KK888", "QQ888", "JJ888", "TT888", "99888", "88877", "88866", "88855", "88844", "88833", "88822",
+			"AA777", "KK777", "QQ777", "JJ777", "TT777", "99777", "88777", "77766", "77755", "77744", "77733", "77722",
+			"AA666", "KK666", "QQ666", "JJ666", "TT666", "99666", "88666", "77666", "66655", "66644", "66633", "66622",
+			"AA555", "KK555", "QQ555", "JJ555", "TT555", "99555", "88555", "77555", "66555", "55544", "55533", "55522",
+			"AA444", "KK444", "QQ444", "JJ444", "TT444", "99444", "88444", "77444", "66444", "55444", "44433", "44422",
+			"AA333", "KK333", "QQ333", "JJ333", "TT333", "99333", "88333", "77333", "66333", "55333", "44333", "33322",		
+			"AA222", "KK222", "QQ222", "JJ222", "TT222", "99222", "88222", "77222", "66222", "55222", "44222", "33222",
+	};
+	public static final String[] TWOPAIR = {
+			"AAKK", "AAQQ", "AAJJ", "AATT", "AA99", "AA88", "AA77", "AA66", "AA55", "AA44", "AA33", "AA22",
+			"KKQQ", "KKJJ", "KKTT", "KK99", "KK88", "KK77", "KK66", "KK55", "KK44", "KK33", "KK22",
+			"QQJJ", "QQTT", "QQ99", "QQ88", "QQ77", "QQ66", "QQ55", "QQ44", "QQ33", "QQ22",
+			"JJTT", "JJ99", "JJ88", "JJ77", "JJ66", "JJ55", "JJ44", "JJ33", "JJ22",
+			"TT99", "TT88", "TT77", "TT66", "TT55", "TT44", "TT33", "TT22",
+			"9988", "9977", "9966", "9955", "9944", "9933", "9922",
+			"8877", "8866", "8855", "8844", "8833", "8822",
+			"7766", "7755", "7744", "7733", "7722",
+			"6655", "6644", "6633", "6622",
+			"5544", "5533", "5522",
+			"4433", "4422",
+			"3322", 		
+	};
+
+
 	public static final String[] PAIR = {"AA", "KK", "QQ", "JJ", "TT", "99", "88", "77", "66", "55", "44", "33", "22"};
-	
+
 	public static int compare(Hand hand1, Hand hand2, Board board)
 	{	
 		int level1 = compareLevel(hand1, board)[0];
@@ -118,6 +148,7 @@ class CompareHands
 		}
 		else if(level == 7) //quads
 		{
+			//compare 5th board card with two hands
 			return 0;
 		}
 		else //straight flush
@@ -222,7 +253,7 @@ class CompareHands
 
 		//number string
 		String numbers = newList.stream().map(x -> x.getNumber().toString()).collect(Collectors.joining(""));
-		
+
 		//exist one of quads types
 		for(int i = 0; i < QUADS.length; i++) 
 		{	
@@ -235,7 +266,7 @@ class CompareHands
 			}
 			else continue;
 		}
-		
+
 		return null;
 	}
 
@@ -339,7 +370,7 @@ class CompareHands
 	static int[] testPair(Hand hand, Board board) {
 		return null;
 	}
-	
+
 	static boolean hasPair(ArrayList<Card> cards) 
 	{	
 		//number string
