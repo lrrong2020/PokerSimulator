@@ -61,6 +61,8 @@ class CompareHands
 				//1 + 4 - chop
 
 				System.out.println("1 + 4 - chop");
+				
+				return 0;
 
 			}
 			else if(hand1Higher.compareTo(hand2Higher) == 0
@@ -69,19 +71,17 @@ class CompareHands
 				//2 + 3 - chop
 
 				System.out.println("2 + 3 - chop");
-
+				
+				return 0;
 			}
 			else 
 			{
 				//compare high card
 
 				System.out.println("compare high card");
+				
+				return hand1Higher.compareTo(hand2Higher);
 			}
-
-
-
-
-			return 0;
 		}
 		else if(level == 1) //one pair
 		{
