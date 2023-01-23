@@ -280,7 +280,42 @@ class CompareHands
 
 	static int[] testFullHouse(Hand hand, Board board) {
 		//test trips (from larger to smaller)
-		
+		int[] resSet = testSet(hand, board);
+		if(resSet != null)
+		{
+			int[] params = new int[2];
+			
+			ArrayList<Card> newList = new ArrayList<Card>(7);
+			newList.addAll(hand.getCards());
+			newList.addAll(board.getCards());
+
+			//sort new List
+			Card.sortCards(newList);
+
+			//number string
+			String numbers = newList.stream().map(x -> x.getNumber().toString()).collect(Collectors.joining(""));
+			
+			System.out.println("numbers: " + numbers);
+			
+			String setNumber = Card.CARD_ORDER_ASC.substring(resSet[0], resSet[0] + 1);
+			
+			System.out.println("setNumber: " + setNumber);
+			
+			int indexOfSetNumber = numbers.indexOf(setNumber);
+			
+			System.out.println("charAtNumber: " + indexOfSetNumber);
+			
+			numbers = numbers.substring(0, indexOfSetNumber) + //before set
+//					numbers.substring(indexOfSetNumber, indexOfSetNumber + 3) //set part removed
+					numbers.substring(indexOfSetNumber + 3); //after set
+			
+			System.out.println(numbers);
+
+		}
+		else 
+		{
+			
+		}
 		//remove trips
 		
 		//search pair(s) in remaining 4 cards

@@ -12,15 +12,15 @@ public class Main
 ////				deck.deal(hand1, hand2, board);
 //
 		//test levels
-		Hand hand1 = new Hand("Ah","8s");
-		Hand hand2 = new Hand("2h","Qc");
+		Hand hand1 = new Hand("6h","8s");
+		Hand hand2 = new Hand("7h","Ac");
 
-		Board board = new Board("7s","6d","Ac","2s","2d");
+		Board board = new Board("As","6d","Ac","7c","2d");
 		
 		System.out.println("public pair? " + CompareHands.hasPair(board.getCards()));
 		
-		int[] testSet = CompareHands.testSet(hand2, board);
-		System.out.println(testSet[0]);
+		int[] testSet = CompareHands.testFullHouse(hand2, board);
+//		System.out.println(testSet[0]);
 //		
 ////		CompareHands.compareSameLevel(hand1, hand2, board, 0, null, null);
 		
