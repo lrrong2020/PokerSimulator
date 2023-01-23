@@ -13,14 +13,15 @@ public class Main
 //
 		//test levels
 		Hand hand1 = new Hand("6h","8s");
-		Hand hand2 = new Hand("7h","Ac");
+		Hand hand2 = new Hand("Ah","2c");
 
-		Board board = new Board("As","6d","Ac","7c","2d");
+		Board board = new Board("Ks","Kd","Jc","2c","2d");
 		
-		System.out.println("public pair? " + CompareHands.hasPair(board.getCards()));
+//		System.out.println("public pair? " + CompareHands.hasPair(board.getCards()));
 		
-		int[] testSet = CompareHands.testFullHouse(hand2, board);
-//		System.out.println(testSet[0]);
+		int[] testFullHouse = CompareHands.testFullHouse(hand2, board);
+		System.out.println("test full house\n[0]: " + testFullHouse[0] + Card.CARD_ORDER_ASC.substring(testFullHouse[0], testFullHouse[0] + 1) +
+				"\n[1]: " + testFullHouse[1] + Card.CARD_ORDER_ASC.substring(testFullHouse[1], testFullHouse[1] + 1));
 //		
 ////		CompareHands.compareSameLevel(hand1, hand2, board, 0, null, null);
 		

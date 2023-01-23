@@ -47,7 +47,7 @@ class CompareHands
 	};
 
 
-	public static final String[] PAIR = {"AA", "KK", "QQ", "JJ", "TT", "99", "88", "77", "66", "55", "44", "33", "22"};
+	public static final String[] PAIR_DESC = {"AA", "KK", "QQ", "JJ", "TT", "99", "88", "77", "66", "55", "44", "33", "22"};
 
 	public static int compare(Hand hand1, Hand hand2, Board board)
 	{	
@@ -179,19 +179,19 @@ class CompareHands
 		int[] resTwoPair = testTwoPair(hand, board);
 		int[] resPair = testPair(hand, board);
 
-		boolean hasPublicPair = hasPair(board.getCards());
+		int numberOfPublicPair = countNumberOfPair(board.getCards());
 
 		if(resStraightFlush != null) 
 		{	
 			params = new int[2];
 			params[0] = 8;
 		}
-		else if(hasPublicPair && resQuads != null) 
+		else if(numberOfPublicPair != 0 && resQuads != null) 
 		{
 			params = new int[2];
 			params[0] = 7;
 		}
-		else if(hasPublicPair && resFullHouse != null) 
+		else if(numberOfPublicPair != 0 && resFullHouse != null) 
 		{
 			params = new int[2];
 			params[0] = 6;
@@ -283,7 +283,7 @@ class CompareHands
 		int[] resSet = testSet(hand, board);
 		if(resSet != null)
 		{
-			int[] params = new int[2];
+			int[] params;
 			
 			ArrayList<Card> newList = new ArrayList<Card>(7);
 			newList.addAll(hand.getCards());
@@ -303,28 +303,71 @@ class CompareHands
 			
 			int indexOfSetNumber = numbers.indexOf(setNumber);
 			
-			System.out.println("charAtNumber: " + indexOfSetNumber);
+			System.out.println("indexOfSetNumber: " + indexOfSetNumber);
 			
+			//remove trips
 			numbers = numbers.substring(0, indexOfSetNumber) + //before set
 //					numbers.substring(indexOfSetNumber, indexOfSetNumber + 3) //set part removed
 					numbers.substring(indexOfSetNumber + 3); //after set
 			
-			System.out.println(numbers);
+			System.out.println("numbers removed set: " + numbers);
+			
+			//search pair(s) in remaining 4 cards
+			
+			//	find larger pair and return
+			for(int i = 0; i < PAIR_DESC.length; i++) 
+			{
+				if(numbers.contains(PAIR_DESC[i])) 
+				{
+					System.out.println("i: " + i + " PAIR_DESC[i]: " + PAIR_DESC[i]);
+								
+//					System.out.println("new numbers: " + numbers);
+					
+					params = new int[2];
+					params[0] = Card.CARD_ORDER_ASC.indexOf(setNumber);
+					params[1] = 12 - i;
+					return params;
 
+				}
+				else continue;
+			}
+			
+			//no pair
+			return resSet;
+			
+			
+			
+
+			//remove duplicate
+//			String numbersNoDuplicate = "";
+//			LinkedHashSet<Character> lhs = new LinkedHashSet<>();
+//			for(int i = 0; i < numbers.length(); i++) lhs.add(numbers.charAt(i));
+//			for(Character ch : lhs) numbersNoDuplicate += ch;
+//			
+//
+//			if(numbersNoDuplicate.length() == 3) 
+//			{
+//				//length == 3 - only 1 pair - Fullhouse
+//				
+//			}
+//			else if(numbersNoDuplicate.length() == 2) 
+//			{
+//				//length == 2 - 2 pairs - bigger one
+//			}
+//			else 
+//			{
+//				//length == 4 - no pair - return set
+//				return reSet;
+//			}	
+			
+			
+			
+			
 		}
 		else 
 		{
-			
+			return null;
 		}
-		//remove trips
-		
-		//search pair(s) in remaining 4 cards
-			
-		//only 1 pair - Fullhouse
-		
-		//2 pairs - bigger one
-		
-		return null;
 	}
 
 	static int[] testFlush(Hand hand, Board board) {
@@ -444,23 +487,46 @@ class CompareHands
 		return null;
 	}
 
-	static int[] testPair(Hand hand, Board board) {
+	static int[] testPair(Hand hand, Board board) 
+	{
 		return null;
 	}
 
-	static boolean hasPair(ArrayList<Card> cards) 
+	static int testPairCollection(ArrayList<Card> cards) 
+	{	
+		if(countNumberOfPair(cards) != 0) 
+		{
+			//number string
+			String numbers = cards.stream().map(x -> x.getNumber().toString()).collect(Collectors.joining(""));
+			
+			for(int i = 0; i < PAIR_DESC.length; i++) 
+			{
+				if(numbers.contains(PAIR_DESC[i])) 
+				{
+					return 12 - i;
+				}
+				else continue;
+			}
+		}
+
+		return -1;
+	}
+	
+	static int countNumberOfPair(ArrayList<Card> cards) 
 	{	
 		//number string
 		String numbers = cards.stream().map(x -> x.getNumber().toString()).collect(Collectors.joining(""));
-
-		for(int i = 0; i < PAIR.length; i++) 
+		
+		int count = 0;
+		
+		for(int i = 0; i < PAIR_DESC.length; i++) 
 		{
-			if(numbers.contains(PAIR[i])) 
+			if(numbers.contains(PAIR_DESC[i])) 
 			{
-				return true;
+				count++;
 			}
 			else continue;
 		}
-		return false;
+		return count;
 	}
 }
