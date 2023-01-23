@@ -269,7 +269,7 @@ class CompareHands
 			if (numbers.contains(quadsNumber)) 
 			{
 				System.out.println("found: " + quadsNumber);
-				params[0] = Card.CARD_ORDER_ASC.indexOf(quadsNumber.substring(0, 1));//x-high straight
+				params[0] = Card.CARD_ORDER_ASC.indexOf(quadsNumber.substring(0, 1));//x-quads
 				return params;
 			}
 			else continue;
@@ -279,6 +279,16 @@ class CompareHands
 	}
 
 	static int[] testFullHouse(Hand hand, Board board) {
+		//test trips (from larger to smaller)
+		
+		//remove trips
+		
+		//search pair(s) in remaining 4 cards
+			
+		//only 1 pair - Fullhouse
+		
+		//2 pairs - bigger one
+		
 		return null;
 	}
 
@@ -368,6 +378,30 @@ class CompareHands
 	}
 
 	static int[] testSet(Hand hand, Board board) {
+		int[] params = new int[1];
+		ArrayList<Card> newList = new ArrayList<Card>(7);
+		newList.addAll(hand.getCards());
+		newList.addAll(board.getCards());
+
+		//sort new List
+		Card.sortCards(newList);
+
+		//number string
+		String numbers = newList.stream().map(x -> x.getNumber().toString()).collect(Collectors.joining(""));
+		
+		//exist one of set types
+		for(int i = 0; i < QUADS.length; i++) 
+		{	
+			String setNumber = SET[i];
+			if (numbers.contains(setNumber)) 
+			{
+				System.out.println("found: " + setNumber);
+				params[0] = Card.CARD_ORDER_ASC.indexOf(setNumber.substring(0, 1));//x-set
+				return params;
+			}
+			else continue;
+		}
+		
 		return null;
 	}
 
