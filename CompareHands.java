@@ -284,7 +284,6 @@ class CompareHands
 		if(resSet != null)
 		{
 			int[] params;
-			
 			ArrayList<Card> newList = new ArrayList<Card>(7);
 			newList.addAll(hand.getCards());
 			newList.addAll(board.getCards());
@@ -293,76 +292,40 @@ class CompareHands
 			Card.sortCards(newList);
 
 			//number string
-			String numbers = newList.stream().map(x -> x.getNumber().toString()).collect(Collectors.joining(""));
-			
-			System.out.println("numbers: " + numbers);
+			String numbers = newList.stream().map(x -> x.getNumber().toString()).collect(Collectors.joining(""));	
+//			System.out.println("numbers: " + numbers);
 			
 			String setNumber = Card.CARD_ORDER_ASC.substring(resSet[0], resSet[0] + 1);
-			
-			System.out.println("setNumber: " + setNumber);
+//			System.out.println("setNumber: " + setNumber);
 			
 			int indexOfSetNumber = numbers.indexOf(setNumber);
+//			System.out.println("indexOfSetNumber: " + indexOfSetNumber);
 			
-			System.out.println("indexOfSetNumber: " + indexOfSetNumber);
-			
-			//remove trips
+			//remove set
 			numbers = numbers.substring(0, indexOfSetNumber) + //before set
 //					numbers.substring(indexOfSetNumber, indexOfSetNumber + 3) //set part removed
-					numbers.substring(indexOfSetNumber + 3); //after set
+					numbers.substring(indexOfSetNumber + 3); //after set	
+//			System.out.println("numbers removed set: " + numbers);
+
 			
-			System.out.println("numbers removed set: " + numbers);
-			
-			//search pair(s) in remaining 4 cards
+			/* search pair(s) in remaining 4 cards */
 			
 			//	find larger pair and return
 			for(int i = 0; i < PAIR_DESC.length; i++) 
 			{
 				if(numbers.contains(PAIR_DESC[i])) 
 				{
-					System.out.println("i: " + i + " PAIR_DESC[i]: " + PAIR_DESC[i]);
-								
-//					System.out.println("new numbers: " + numbers);
-					
+					System.out.println("i: " + i + " PAIR_DESC[i]: " + PAIR_DESC[i]);							
+//					System.out.println("new numbers: " + numbers);			
 					params = new int[2];
 					params[0] = Card.CARD_ORDER_ASC.indexOf(setNumber);
 					params[1] = 12 - i;
 					return params;
-
 				}
 				else continue;
-			}
-			
+			}	
 			//no pair
 			return resSet;
-			
-			
-			
-
-			//remove duplicate
-//			String numbersNoDuplicate = "";
-//			LinkedHashSet<Character> lhs = new LinkedHashSet<>();
-//			for(int i = 0; i < numbers.length(); i++) lhs.add(numbers.charAt(i));
-//			for(Character ch : lhs) numbersNoDuplicate += ch;
-//			
-//
-//			if(numbersNoDuplicate.length() == 3) 
-//			{
-//				//length == 3 - only 1 pair - Fullhouse
-//				
-//			}
-//			else if(numbersNoDuplicate.length() == 2) 
-//			{
-//				//length == 2 - 2 pairs - bigger one
-//			}
-//			else 
-//			{
-//				//length == 4 - no pair - return set
-//				return reSet;
-//			}	
-			
-			
-			
-			
 		}
 		else 
 		{

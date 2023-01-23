@@ -15,7 +15,7 @@ public class Main
 		Hand hand1 = new Hand("6h","8s");
 		Hand hand2 = new Hand("Ah","2c");
 
-		Board board = new Board("Ks","Kd","Jc","2c","2d");
+		Board board = new Board("Ks","Qd","Kc","3c","4d");
 		
 //		System.out.println("public pair? " + CompareHands.hasPair(board.getCards()));
 		
