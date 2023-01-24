@@ -4,26 +4,23 @@ public class Main
 {
 	public static void main(String[] args) 
 	{
-////				//test deal
-////				Hand hand1 = new Hand();
-////				Hand hand2 = new Hand();
-////				
-////				Board board = new Board();
-////				
-////				Deck deck = new Deck();
-////				deck.deal(hand1, hand2, board);
+				//test deal
+				Hand hand1 = new Hand();
+				Hand hand2 = new Hand();
+				
+				Board board = new Board();
+				
+				Deck deck = new Deck();
+				deck.deal(hand1, hand2, board);
 //
-		//test levels
-		Hand hand1 = new Hand("6h","8s");
-		Hand hand2 = new Hand("Ah","2c");
-
-		Board board = new Board("As","Ad","Kc","4c","4d");
 		
+//		//test levels
+//		Hand hand1 = new Hand("6h","8s");
+//		Hand hand2 = new Hand("Ah","2c");
+//
+//		Board board = new Board("As","Ad","Kc","4c","4d");
 		
-		ArrayList<Integer> result = CompareHands.getPair(board.getCards(), new ArrayList<Integer>());
-		for(int i: result) {
-			System.out.println("result i: " + i);
-		}
+		CompareHands.compareLevel(hand1, board);
 		
 //		System.out.println("public pair? " + CompareHands.hasPair(board.getCards()));
 		

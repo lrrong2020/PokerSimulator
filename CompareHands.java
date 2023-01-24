@@ -176,53 +176,94 @@ class CompareHands
 		int[] resFlush = testFlush(hand, board);
 		int[] resStraight = testStraight(hand, board);
 		int[] resSet = testSet(hand, board);
-		int[] resTwoPair = testTwoPair(hand, board);
-		int[] resPair = testPair(hand, board);
+		int[] resPair = testPairs(hand, board);
 
 		int numberOfPublicPair = countNumberOfPair(board.getCards());
 
 		if(resStraightFlush != null) 
 		{	
+			
+			System.out.println("===================");
+			System.out.println("StraightFlush: ");
+			System.out.println("");
+
 			params = new int[2];
 			params[0] = 8;
 		}
 		else if(numberOfPublicPair != 0 && resQuads != null) 
 		{
+			System.out.println("===================");
+			System.out.println("Quads: ");
+			System.out.println("");
+
 			params = new int[2];
 			params[0] = 7;
 		}
 		else if(numberOfPublicPair != 0 && resFullHouse != null) 
 		{
+			System.out.println("===================");
+			System.out.println("FullHouse: " );
+			System.out.println("");
+
 			params = new int[2];
 			params[0] = 6;
 		}
 		else if(resFlush != null) 
 		{
+			System.out.println("===================");
+			System.out.println("Flush: ");
+			System.out.println("");
+
 			params = new int[2];
 			params[0] = 5;
 		}
 		else if(resStraight != null) 
 		{
+			System.out.println("===================");
+			System.out.println("Straight: ");
+			System.out.println("");
+
 			params = new int[2];
 			params[0] = 4;
 		}
 		else if(resSet != null) 
-		{
+		{	
+			System.out.println("===================");
+			System.out.println("Set: ");
+			System.out.println("");
+
 			params = new int[2];
 			params[0] = 3;
 		}
-		else if(resTwoPair != null) 
-		{
-			params = new int[2];
-			params[0] = 2;
-		}
 		else if(resPair != null) 
 		{
-			params = new int[2];
-			params[0] = 1;
+			if(resPair.length == 2) 
+			{
+				System.out.println("===================");
+				System.out.println("Two Pairs");
+				System.out.println("");
+				params = new int[3];
+				params[0] = 2;//two pairs
+				
+				params[1] = resPair[0];
+				params[2] = resPair[1];
+			}
+			else 
+			{	
+				System.out.println("===================");
+				System.out.println("One Pair: ");
+				System.out.println("");
+				params = new int[2];
+				params[0] = 1;//one pair
+				
+				params[1] = resPair[0];
+			}
 		}
 		else 
 		{
+			System.out.println("===================");
+			System.out.println("High Card");
+			System.out.println("");
 			params = new int[1];
 			params[0] = 0;
 		}
@@ -446,21 +487,39 @@ class CompareHands
 		return null;
 	}
 
-	static int[] testTwoPair(Hand hand, Board board) {
-		return null;
-	}
+	static int[] testPairs(Hand hand, Board board) {
+		ArrayList<Card> newList = new ArrayList<Card>(7);
+		newList.addAll(hand.getCards());
+		newList.addAll(board.getCards());
 
-	static int[] testPair(Hand hand, Board board) 
-	{	
+		//sort new List
+		Card.sortCards(newList);
+
+		ArrayList<Integer> resultList = CompareHands.getPair(board.getCards(), new ArrayList<Integer>());
 		
-		return null;
+		if(resultList.size() == 0) 
+		{
+			return null;
+
+		}
+		else 
+		{
+			int[] res = new int[resultList.size()];
+			
+			for(int i = 0; i < res.length; i++) 
+			{
+				res[i] = resultList.get(i);
+			}
+			
+			return res; 	
+		}
 	}
 	
 	static ArrayList<Integer> getPair(ArrayList<Card> cards, ArrayList<Integer> pairNumbers ) 
 	{
 		//test if cards contains pair
 
-		Card.sortCards(cards);
+//		Card.sortCards(cards);
 		
 		if(countNumberOfPair(cards) == 0) return pairNumbers;
 
