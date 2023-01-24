@@ -54,6 +54,58 @@ class Card implements Comparable
 		Collections.sort(cards, (b, a) -> a.compareTo(b));
 		return cards;
 	}
+	
+	public static int compareHighCards(ArrayList<Card> cards1, ArrayList<Card> cards2) 
+	{
+		//5 cards (high card no chop)
+		
+		
+		//3 cards (one pair)
+		
+		
+		//2 cards (set)
+		
+		
+		//1 card (Quads, Two-pair)
+		
+		
+		//compare cards one by one
+		
+		//if the first the same, then the next
+		
+		System.out.println("comparing cards-----" + 
+		"\ncards1.size(): " + cards1.size() + " cards2.size(): " + cards2.size());
+		
+//		for(Card card: cards1) System.out.println("[card1]" + card); 
+//		for(Card card: cards2) System.out.println("[card2]" + card); 
+//		
+		if(cards1.size() == 5) 
+		{
+			//one pair removed 2 cards (7 - 2 = 5)
+
+			for(int i = 0; i < 3; i++) 
+			{
+				if(cards1.get(i).compareTo(cards2.get(i)) > 0) 
+				{
+					System.out.println("card1 wins");
+					return 1;
+				}
+				else if(cards1.get(i).compareTo(cards2.get(i)) < 0) 
+				{
+					System.out.println("card2 wins");
+					return -1;
+				}
+				else 
+				{
+					continue;
+				}
+			}
+			System.out.println("chop chop");
+			return 0;
+		}
+		return 0;
+		
+	}
 
 	public String toString()
 	{

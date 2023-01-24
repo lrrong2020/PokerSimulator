@@ -12,10 +12,10 @@ public class Main
 //
 		
 //		//test levels
-		Hand hand1 = new Hand("9c","9d");
-		Hand hand2 = new Hand("Ah","2c");
+		Hand hand1 = new Hand("Kc","3d");
+		Hand hand2 = new Hand("Kh","7c");
 
-		Board board = new Board("As" ,"Kd", "Qh", "5s", "3d");
+		Board board = new Board("6s" ,"Kd", "Qh", "5s", "9d");
 		
 		CompareHands.compare(hand1, hand2, board);
 		

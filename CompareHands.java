@@ -68,7 +68,7 @@ class CompareHands
 		}
 	}
 
-	static int compareSameLevel(Hand hand1, Hand hand2, Board board, int level, int[] params1, int[] params2) 
+	static int compareSameLevel(Hand hand1, Hand hand2, Board board, int level, int[] params1, int[] params2)
 	{	
 		System.out.println("compareSameLevel" + "\nlevel: " + level);
 		if(level == 0) 
@@ -129,20 +129,49 @@ class CompareHands
 				//compare high card
 
 				System.out.println("compare high card");
+				
+				Card.compareHighCards(hand1.getCards(), hand2.getCards());
 
 				return hand1Higher.compareTo(hand2Higher);
 			}
 		}
 		else if(level == 1) //one pair
-		{
+		{	
+			System.out.println("Comparing one-pairs");
+			System.out.println(Card.CARD_ORDER_ASC.substring(params1[1], params1[1] + 1));
+			
 			if(params1[1] == params2[1]) 
 			{
-				//compare kicker
+				//remove the pair
+				ArrayList<Card> cards1 = hand1.getCards();
+				cards1.addAll(board.getCards());
+				Card.sortCards(cards1);
+
 				
+				for(int i = 0; i < cards1.size(); i++) 
+				{
+					if(cards1.get(i).getNumber().equals(Card.CARD_ORDER_ASC.substring(params1[1], params1[1] + 1))) 
+					{
+						System.out.println("[Cards1]Removed first? " + cards1.remove(i));
+						System.out.println("[Cards1]Removed second? " + cards1.remove(i));
+					}
+				}
 				
-				return 0;
+				ArrayList<Card> cards2 = hand2.getCards();
+				cards2.addAll(board.getCards());
+				Card.sortCards(cards2);
 				
-				//chop
+				for(int i = 0; i < cards2.size(); i++) 
+				{
+					if(cards2.get(i).getNumber().equals(Card.CARD_ORDER_ASC.substring(params1[1], params1[1] + 1))) 
+					{
+						System.out.println("[Cards2]Removed first? " + cards2.remove(i));
+						System.out.println("[Cards2]Removed second? " + cards2.remove(i));
+					}
+				}
+				
+				//compare cards
+				return Card.compareHighCards(cards1, cards2);
 			}
 			else 
 			{
