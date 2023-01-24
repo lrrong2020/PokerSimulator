@@ -1,2 +1,0 @@
-# PokerSimulator
-Texas Hold'em
