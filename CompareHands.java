@@ -69,9 +69,12 @@ class CompareHands
 	}
 
 	static int compareSameLevel(Hand hand1, Hand hand2, Board board, int level, int[] params1, int[] params2) 
-	{
-		if(level == 0) //high card
+	{	
+		System.out.println("compareSameLevel" + "\nlevel: " + level);
+		if(level == 0) 
 		{	
+			//high card
+			
 			//pre-condition!
 			//			hand1.sort();
 			//			hand2.sort();
@@ -132,35 +135,79 @@ class CompareHands
 		}
 		else if(level == 1) //one pair
 		{
-			return 0;
+			if(params1[1] == params2[1]) 
+			{
+				//compare kicker
+				
+				
+				return 0;
+				
+				//chop
+			}
+			else 
+			{
+				//larger one wins
+				System.out.println("params1[1]: " + params1[1]);
+				System.out.println("params2[1]: " + params2[1]);
+				return params1[0] > params2[0] ? 1 : -1;
+			}
+
 		}
 		else if(level == 2) //two pair
 		{
+			//compare [1]
+			
+			//if the same, compare [2]
+			
+			//if the same, compare the remaining card
+			
+			//if the same, chop
 			return 0;
 		}
 		else if(level == 3) //set
 		{
+			//compare [1]
+			
+			//if the same, compare the 4th card
+			
+			//if the same, compare the 5th card
+			
+			//if the same, chop
 			return 0;
 		}
 		else if(level == 4) //straight
 		{
+			//compare [1]
+			
+			//if the same, chop
 			return 0;
 		}
 		else if(level == 5) //flush
 		{
+			//compare [1]
+			
+			//if the same, chop
 			return 0;
 		}
 		else if(level == 6) //full house
 		{
+			//compare [1]
+			
+			//if the same, compare [2]
+			
+			//if the same, chop
 			return 0;
 		}
 		else if(level == 7) //quads
 		{
-			//compare 5th board card with two hands
+			//compare [1]
+			
+			//if the same, compare the remaining card
 			return 0;
 		}
 		else //straight flush
 		{
+			//compare [1]
 			return 0;
 		}
 
