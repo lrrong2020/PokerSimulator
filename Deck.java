@@ -27,16 +27,22 @@ class Deck
 	void deal(Hand hand1, Hand hand2, Board board) 
 	{
 		System.out.println("Dealing...");
+		
 
+		
 		hand1.getCards().add(this.cards.remove(0));
 		hand1.getCards().add(this.cards.remove(0));
 		hand1.sort();
 		System.out.println("Hand 1: " + hand1.toString());
 
-		hand2.getCards().add(this.cards.remove(0));
-		hand2.getCards().add(this.cards.remove(0));
-		hand2.sort();
-		System.out.println("Hand 2: " + hand2.toString());
+		//for testing
+		if(hand2 != null) 
+		{
+			hand2.getCards().add(this.cards.remove(0));
+			hand2.getCards().add(this.cards.remove(0));
+			hand2.sort();
+			System.out.println("Hand 2: " + hand2.toString());
+		}
 
 		board.getCards().add(this.cards.remove(0));
 		board.getCards().add(this.cards.remove(0));

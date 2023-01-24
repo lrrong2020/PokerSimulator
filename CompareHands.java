@@ -284,12 +284,14 @@ class CompareHands
 		else if(resStraight != null)
 		{
 			//only straight
-			return resStraight;
+			testStraight(hand, board);
+			return null;
 		}
 		else
 		{
 			//only flush
-			return resFlush;
+			testFlush(hand, board);
+			return null;
 		}
 	}
 
@@ -368,7 +370,8 @@ class CompareHands
 				else continue;
 			}	
 			//no pair
-			return resSet;
+			testSet(hand, board);
+			return null;
 		}
 		else 
 		{
