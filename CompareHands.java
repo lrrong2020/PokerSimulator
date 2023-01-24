@@ -179,7 +179,9 @@ class CompareHands
 		int[] resPair = testPairs(hand, board);
 
 		int numberOfPublicPair = countNumberOfPair(board.getCards());
-
+		System.out.println("number of public pair: " + numberOfPublicPair);
+		
+		
 		if(resStraightFlush != null) 
 		{	
 			
@@ -495,16 +497,15 @@ class CompareHands
 		//sort new List
 		Card.sortCards(newList);
 		
-		for(Card card: newList) System.out.println(card);
+//		for(Card card: newList) System.out.println(card);
 
-		ArrayList<Integer> resultList = CompareHands.getPair(board.getCards(), new ArrayList<Integer>());
+		ArrayList<Integer> resultList = CompareHands.getPair(newList, new ArrayList<Integer>());
 		
-		System.out.println("resultList.size(): " + resultList.size());
-		
+//		System.out.println("resultList.size(): " + resultList.size());
+
 		if(resultList.size() == 0) 
 		{
 			return null;
-
 		}
 		else 
 		{
@@ -524,38 +525,43 @@ class CompareHands
 		//test if cards contains pair
 
 //		Card.sortCards(cards);
+		int numberOfPair = countNumberOfPair(cards);
 		
-		if(countNumberOfPair(cards) == 0) return pairNumbers;
+//		System.out.println("number of pai in getPair(): " + numberOfPair);
+
+		
+		if(numberOfPair == 0) return pairNumbers;
 
 		//number string
 		String numbers = cards.stream().map(x -> x.getNumber().toString()).collect(Collectors.joining(""));
 	
-		System.out.println("numbers in getPair: " + numbers);
+//		System.out.println("numbers in getPair: " + numbers);
 		
 		//return cards removed one pair with pair
 		for(int i = 0; i < PAIR_DESC.length; i++) 
 		{
 			if(numbers.contains(PAIR_DESC[i])) 
 			{
-				System.out.println("i: " + i + " PAIR_DESC[i]: " + PAIR_DESC[i]);							
-				System.out.println("new numbers: " + numbers);			
+//				System.out.println("i: " + i + " PAIR_DESC[i]: " + PAIR_DESC[i]);							
+//				System.out.println("new numbers: " + numbers);	
+				
 				String pairNumber = Card.CARD_ORDER_DESC.substring(i, i + 1);
 				
-				System.out.println("pairNumber: " + pairNumber);
+//				System.out.println("pairNumber: " + pairNumber);
 				
 				int indexOfPairNumber = numbers.indexOf(pairNumber);
 				
 				String trancatedNumbers = numbers.substring(0, indexOfPairNumber) + numbers.substring(indexOfPairNumber + 2);
 				
-				System.out.println("trancatedNumbers: " + trancatedNumbers);
+//				System.out.println("trancatedNumbers: " + trancatedNumbers);
 				
-				System.out.println("indexOfPairNumber: " + indexOfPairNumber);
+//				System.out.println("indexOfPairNumber: " + indexOfPairNumber);
 //				
 				cards.remove(indexOfPairNumber);
 				cards.remove(indexOfPairNumber);
 				
 				for(Card card: cards)
-				System.out.println(card);
+//				System.out.println(card);
 				
 				pairNumbers.add(12 - i);
 				
@@ -592,7 +598,7 @@ class CompareHands
 		//number string
 		String numbers = cards.stream().map(x -> x.getNumber().toString()).collect(Collectors.joining(""));
 		
-		System.out.println("numbers in countNumberOfPair: " + numbers );
+//		System.out.println("numbers in countNumberOfPair: " + numbers );
 		
 		int count = 0;
 		
@@ -605,7 +611,7 @@ class CompareHands
 			else continue;
 		}
 		
-		System.out.println("countNumberOfPair: " + count);
+//		System.out.println("countNumberOfPair: " + count);
 		return count;
 	}
 }

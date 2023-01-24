@@ -18,7 +18,7 @@ public class Main
 		Hand hand1 = new Hand("Ah","7h");
 //		Hand hand2 = new Hand("Ah","2c");
 //
-		Board board = new Board("As" ,"Qh", "9s", "7d", "2s");
+		Board board = new Board("As" ,"Qh", "9s", "8d", "2s");
 		
 		CompareHands.compareLevel(hand1, board);
 		
