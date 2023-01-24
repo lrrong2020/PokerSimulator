@@ -504,7 +504,7 @@ class CompareHands
 
 		ArrayList<Integer> resultList = CompareHands.getPair(newList, new ArrayList<Integer>());
 		
-//		System.out.println("resultList.size(): " + resultList.size());
+		System.out.println("resultList.size(): " + resultList.size());
 
 		if(resultList.size() == 0) 
 		{
@@ -550,7 +550,7 @@ class CompareHands
 				
 				String pairNumber = Card.CARD_ORDER_DESC.substring(i, i + 1);
 				
-//				System.out.println("pairNumber: " + pairNumber);
+				System.out.println("pairNumber: " + pairNumber);
 				
 				int indexOfPairNumber = numbers.indexOf(pairNumber);
 				
@@ -563,8 +563,11 @@ class CompareHands
 				cards.remove(indexOfPairNumber);
 				cards.remove(indexOfPairNumber);
 				
-				for(Card card: cards)
-//				System.out.println(card);
+				for(Card card: cards) 
+				{
+					System.out.println(card);
+				}
+
 				
 				pairNumbers.add(12 - i);
 				
