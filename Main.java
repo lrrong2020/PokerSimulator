@@ -5,20 +5,20 @@ public class Main
 	public static void main(String[] args) 
 	{
 				//test deal
-				Hand hand1 = new Hand();
+//				Hand hand1 = new Hand();
 				Hand hand2 = new Hand();
 				
-				Board board = new Board();
+//				Board board = new Board();
 				
-				Deck deck = new Deck();
-				deck.deal(hand1, hand2, board);
+//				Deck deck = new Deck();
+//				deck.deal(hand1, hand2, board);
 //
 		
 //		//test levels
-//		Hand hand1 = new Hand("6h","8s");
+		Hand hand1 = new Hand("Ah","7h");
 //		Hand hand2 = new Hand("Ah","2c");
 //
-//		Board board = new Board("As","Ad","Kc","4c","4d");
+		Board board = new Board("As" ,"Qh", "9s", "7d", "2s");
 		
 		CompareHands.compareLevel(hand1, board);
 		

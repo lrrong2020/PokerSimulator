@@ -80,17 +80,17 @@ class CompareHands
 			Card hand1Higher = hand1.getCards().get(0);
 			Card hand1Lower = hand1.getCards().get(1);
 
-			System.out.println("hand1Higher: " + hand1Higher);
-			System.out.println("hand1Lower: " + hand1Lower);
+//			System.out.println("hand1Higher: " + hand1Higher);
+//			System.out.println("hand1Lower: " + hand1Lower);
 
 			Card hand2Higher = hand2.getCards().get(0);
 			Card hand2Lower = hand2.getCards().get(1);
 
-			System.out.println("hand2Higher: " + hand2Higher);
-			System.out.println("hand2Lower: " + hand2Lower);
+//			System.out.println("hand2Higher: " + hand2Higher);
+//			System.out.println("hand2Lower: " + hand2Lower);
 
 			Card boardLowest = board.getCards().get(4);
-			System.out.println("boardLowest: " + boardLowest);
+//			System.out.println("boardLowest: " + boardLowest);
 
 			if(hand1Higher.compareTo(boardLowest) < 0
 					&& hand2Higher.compareTo(boardLowest) < 0)
@@ -309,7 +309,7 @@ class CompareHands
 			String quadsNumber = QUADS[i];
 			if (numbers.contains(quadsNumber)) 
 			{
-				System.out.println("found: " + quadsNumber);
+//				System.out.println("found: " + quadsNumber);
 				params[0] = Card.CARD_ORDER_ASC.indexOf(quadsNumber.substring(0, 1));//x-quads
 				return params;
 			}
@@ -356,7 +356,7 @@ class CompareHands
 			{
 				if(numbers.contains(PAIR_DESC[i])) 
 				{
-					System.out.println("i: " + i + " PAIR_DESC[i]: " + PAIR_DESC[i]);							
+//					System.out.println("i: " + i + " PAIR_DESC[i]: " + PAIR_DESC[i]);							
 //					System.out.println("new numbers: " + numbers);			
 					params = new int[2];
 					params[0] = Card.CARD_ORDER_ASC.indexOf(setNumber);
@@ -391,7 +391,7 @@ class CompareHands
 		Arrays.sort(temp);
 		suits = new String(temp);
 
-		System.out.println("suits:" + suits);
+//		System.out.println("suits:" + suits);
 
 		//check 5 cards in same suit
 		for(int i = 0; i < FLUSHES.length; i++) 
@@ -399,7 +399,7 @@ class CompareHands
 			if (suits.contains(FLUSHES[i])) 
 			{	
 				String flushSuit = FLUSHES[i].substring(0, 1);
-				System.out.println("found: " + FLUSHES[i]);
+//				System.out.println("found: " + FLUSHES[i]);
 
 				for(int j = 0; j < newList.size(); j++) 
 				{	
@@ -436,7 +436,7 @@ class CompareHands
 		for(int i = 0; i < numbers.length(); i++) lhs.add(numbers.charAt(i));
 		for(Character ch : lhs) numbersNoDuplicate += ch;
 
-		System.out.println("numbersNoDuplicate: " + numbersNoDuplicate); 
+//		System.out.println("numbersNoDuplicate: " + numbersNoDuplicate); 
 
 		//if A exists, add to the end
 		if(numbersNoDuplicate.substring(0, 1).equals("A")) 
@@ -450,7 +450,7 @@ class CompareHands
 			String straightNumber = STRAIGHTS[i];
 			if (numbersNoDuplicate.contains(straightNumber)) 
 			{
-				System.out.println("found: " + straightNumber);
+//				System.out.println("found: " + straightNumber);
 				params[0] = Card.CARD_ORDER_ASC.indexOf(straightNumber.substring(0, 1));//x-high straight
 				return params;
 			}
@@ -477,7 +477,7 @@ class CompareHands
 			String setNumber = SET[i];
 			if (numbers.contains(setNumber)) 
 			{
-				System.out.println("found: " + setNumber);
+//				System.out.println("found: " + setNumber);
 				params[0] = Card.CARD_ORDER_ASC.indexOf(setNumber.substring(0, 1));//x-set
 				return params;
 			}
@@ -494,8 +494,12 @@ class CompareHands
 
 		//sort new List
 		Card.sortCards(newList);
+		
+		for(Card card: newList) System.out.println(card);
 
 		ArrayList<Integer> resultList = CompareHands.getPair(board.getCards(), new ArrayList<Integer>());
+		
+		System.out.println("resultList.size(): " + resultList.size());
 		
 		if(resultList.size() == 0) 
 		{
@@ -526,7 +530,7 @@ class CompareHands
 		//number string
 		String numbers = cards.stream().map(x -> x.getNumber().toString()).collect(Collectors.joining(""));
 	
-		System.out.println("numbers: " + numbers);
+		System.out.println("numbers in getPair: " + numbers);
 		
 		//return cards removed one pair with pair
 		for(int i = 0; i < PAIR_DESC.length; i++) 
@@ -534,7 +538,7 @@ class CompareHands
 			if(numbers.contains(PAIR_DESC[i])) 
 			{
 				System.out.println("i: " + i + " PAIR_DESC[i]: " + PAIR_DESC[i]);							
-//				System.out.println("new numbers: " + numbers);			
+				System.out.println("new numbers: " + numbers);			
 				String pairNumber = Card.CARD_ORDER_DESC.substring(i, i + 1);
 				
 				System.out.println("pairNumber: " + pairNumber);
@@ -588,6 +592,8 @@ class CompareHands
 		//number string
 		String numbers = cards.stream().map(x -> x.getNumber().toString()).collect(Collectors.joining(""));
 		
+		System.out.println("numbers in countNumberOfPair: " + numbers );
+		
 		int count = 0;
 		
 		for(int i = 0; i < PAIR_DESC.length; i++) 
@@ -598,6 +604,8 @@ class CompareHands
 			}
 			else continue;
 		}
+		
+		System.out.println("countNumberOfPair: " + count);
 		return count;
 	}
 }
