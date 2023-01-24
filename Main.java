@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Main
 {
 	public static void main(String[] args) 
@@ -15,14 +17,20 @@ public class Main
 		Hand hand1 = new Hand("6h","8s");
 		Hand hand2 = new Hand("Ah","2c");
 
-		Board board = new Board("Ks","Qd","Kc","3c","4d");
+		Board board = new Board("As","Ad","Kc","4c","4d");
+		
+		
+		ArrayList<Integer> result = CompareHands.getPair(board.getCards(), new ArrayList<Integer>());
+		for(int i: result) {
+			System.out.println("result i: " + i);
+		}
 		
 //		System.out.println("public pair? " + CompareHands.hasPair(board.getCards()));
 		
-		int[] testFullHouse = CompareHands.testFullHouse(hand2, board);
-		System.out.println("test full house\n[0]: " + testFullHouse[0] + Card.CARD_ORDER_ASC.substring(testFullHouse[0], testFullHouse[0] + 1) +
-				"\n[1]: " + testFullHouse[1] + Card.CARD_ORDER_ASC.substring(testFullHouse[1], testFullHouse[1] + 1));
-//		
+//		int[] testFullHouse = CompareHands.testFullHouse(hand2, board);
+//		System.out.println("test full house\n[0]: " + testFullHouse[0] + Card.CARD_ORDER_ASC.substring(testFullHouse[0], testFullHouse[0] + 1) +
+//				"\n[1]: " + testFullHouse[1] + Card.CARD_ORDER_ASC.substring(testFullHouse[1], testFullHouse[1] + 1));
+	
 ////		CompareHands.compareSameLevel(hand1, hand2, board, 0, null, null);
 		
 //		

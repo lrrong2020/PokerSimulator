@@ -451,30 +451,79 @@ class CompareHands
 	}
 
 	static int[] testPair(Hand hand, Board board) 
-	{
+	{	
+		
 		return null;
 	}
-
-	static int testPairCollection(ArrayList<Card> cards) 
-	{	
-		if(countNumberOfPair(cards) != 0) 
-		{
-			//number string
-			String numbers = cards.stream().map(x -> x.getNumber().toString()).collect(Collectors.joining(""));
-			
-			for(int i = 0; i < PAIR_DESC.length; i++) 
-			{
-				if(numbers.contains(PAIR_DESC[i])) 
-				{
-					return 12 - i;
-				}
-				else continue;
-			}
-		}
-
-		return -1;
-	}
 	
+	static ArrayList<Integer> getPair(ArrayList<Card> cards, ArrayList<Integer> pairNumbers ) 
+	{
+		//test if cards contains pair
+
+		Card.sortCards(cards);
+		
+		if(countNumberOfPair(cards) == 0) return pairNumbers;
+
+		//number string
+		String numbers = cards.stream().map(x -> x.getNumber().toString()).collect(Collectors.joining(""));
+	
+		System.out.println("numbers: " + numbers);
+		
+		//return cards removed one pair with pair
+		for(int i = 0; i < PAIR_DESC.length; i++) 
+		{
+			if(numbers.contains(PAIR_DESC[i])) 
+			{
+				System.out.println("i: " + i + " PAIR_DESC[i]: " + PAIR_DESC[i]);							
+//				System.out.println("new numbers: " + numbers);			
+				String pairNumber = Card.CARD_ORDER_DESC.substring(i, i + 1);
+				
+				System.out.println("pairNumber: " + pairNumber);
+				
+				int indexOfPairNumber = numbers.indexOf(pairNumber);
+				
+				String trancatedNumbers = numbers.substring(0, indexOfPairNumber) + numbers.substring(indexOfPairNumber + 2);
+				
+				System.out.println("trancatedNumbers: " + trancatedNumbers);
+				
+				System.out.println("indexOfPairNumber: " + indexOfPairNumber);
+//				
+				cards.remove(indexOfPairNumber);
+				cards.remove(indexOfPairNumber);
+				
+				for(Card card: cards)
+				System.out.println(card);
+				
+				pairNumbers.add(12 - i);
+				
+				return getPair(cards, pairNumbers);
+			}
+			else continue;
+		}	
+		//if no pair, return
+		return pairNumbers;
+	}
+//
+//	static int testPairCollection(ArrayList<Card> cards) 
+//	{	
+//		if(countNumberOfPair(cards) != 0) 
+//		{
+//			//number string
+//			String numbers = cards.stream().map(x -> x.getNumber().toString()).collect(Collectors.joining(""));
+//			
+//			for(int i = 0; i < PAIR_DESC.length; i++) 
+//			{
+//				if(numbers.contains(PAIR_DESC[i])) 
+//				{
+//					return 12 - i;
+//				}
+//				else continue;
+//			}
+//		}
+//
+//		return -1;
+//	}
+//	
 	static int countNumberOfPair(ArrayList<Card> cards) 
 	{	
 		//number string
